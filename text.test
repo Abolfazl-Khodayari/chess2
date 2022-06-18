@@ -1,8 +1,20 @@
 -- -- -- -- -- -- -- --
--- -- -- -- -- -- -- --
--- -- KB -- -- -- -- --
--- -- -- -- -- -- -- --
+-- -- PB -- -- -- -- --
 -- -- -- -- -- -- -- --
 -- -- -- -- -- -- -- --
 -- -- -- -- -- -- -- --
+-- -- -- PW -- -- -- --
 -- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+KB KB KB KB KB KB KB KB
+
+
+ and (board[j][j].mohre->team != board[x][y].mohre->team)

@@ -18,6 +18,7 @@ public:
     int x = 9;
     int y = 9;
     int team;
+    
     Texture texturekey;
     Sprite spritekey;
     enum keytypes { king, queen, bishop, knight, rook, pawn, empt };
@@ -27,6 +28,10 @@ public:
         x = i;
         y = j;
     }
+    // void checkmove(){
+    //     cout << "Im in keys" << endl;
+    // }
+
 };
 class point {
 public:
@@ -48,19 +53,6 @@ public:
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*75), (y*75)));
         
-    }
-    int checkmove(point** myboard) {
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                if ((abs(x - i) < 2 || abs(y - j) < 2) and (myboard[j][j].mohre->team != team)){
-                    accessible[i][j] = 1;
-                }
-                cout << accessible[i][j] << " ";
-            }
-            cout << endl;
-        }
-        return 0;
     }
 };
 class Queen : public keys {
@@ -225,8 +217,73 @@ public:
         cout << board[i][j].mohre->keyname << " -> " << board[y][x].mohre->keyname << endl;
         board[y][x].mohre = board[i][j].mohre;
         board[i][j].mohre = new Empty;
-        
     }
+    vector<vector<int>> checkmove(int x, int y) {
+        vector<vector<int>> accessible (8, vector<int>(8,0));
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                if(board[i][j].mohre->team != board[x][y].mohre->team){
+                    if (board[x][y].mohre->keytype == keys::king){
+                        if ((abs(x - i) < 2 and abs(y - j) < 2)){
+                            accessible[i][j] = 1;
+                        }
+                    }
+                    else if (board[x][y].mohre->keytype == keys::queen){
+
+                    }
+                    else if (board[x][y].mohre->keytype == keys::rook){
+
+                    }
+                    else if (board[x][y].mohre->keytype == keys::knight){
+
+                    }
+                    else if (board[x][y].mohre->keytype == keys::bishop){
+
+                    }
+                    else if (board[x][y].mohre->keytype == keys::pawn){
+                        if (board[x][y].mohre->team == 1){
+                            if (board[i][j].mohre->team == 2 and (x - i == 1)){
+                                if (abs(y - j) == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            else{
+                                if (x == 6){
+                                    if (y == j and (i == 5 or i == 4)){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                else if(x != 6 and y == j and x-i == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                            }
+                        else if (board[x][y].mohre->team == 2){
+                            if (board[i][j].mohre->team == 1 and (i - x == 1)){
+                                if (abs(y - j) == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            else{
+                                if (x == 1){
+                                    if (y == j and (i == 3 or i == 2)){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                else if(x != 1 and y == j and i-x == 1){
+                                        accessible[i][j] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                cout << accessible[i][j] << " ";
+            }
+            cout << endl;
+        }
+        return accessible;
+    }
+        
     // void mousemove(Vector2i mousestate){
     //     int tx = mousestate.y;
     //     int ty = mousestate.x;
@@ -264,10 +321,14 @@ public:
         RectangleShape selectioncell1(Vector2f((86), (86)));
         selectioncell1.setOutlineThickness(7);
         selectioncell1.setOutlineColor(Color(0, 255, 0, 255));
-        selectioncell1.setFillColor(sf::Color(0, 0, 0, 0));
+        selectioncell1.setFillColor(Color(0, 0, 0, 0));
         selectioncell1.setPosition(Vector2f((1900), (1900)));
         Texture temp4; 
+        vector<vector<int>> accessible_cells;
         Sprite temp4sprite;
+        // CircleShape accessible_cell(25);
+        // accessible_cell.setFillColor(Color(0, 250, 0, 170));
+        // accessible_cell.setPosition(Vector2f((3*100 + 25), (3*100 + 25)));
         int temp2[4];
         int mousecounter = 0;
         int tempmousex;
@@ -275,6 +336,8 @@ public:
         //cout << myboard[0][0].mohre->keyname << endl;
         while (window.isOpen()){
             Event event;
+            window.clear();
+            window.draw(spriteboard);
             while (window.pollEvent(event))
                 if (event.type == Event::Closed)
                     window.close();
@@ -295,6 +358,7 @@ public:
                                     tempmousex = mousex;
                                     tempmousey = mousey;
                                     cout << "cell selected" << endl;
+                                    accessible_cells = myboard.checkmove(mousex, mousey);
                                 }
                             }
                             else {
@@ -317,11 +381,8 @@ public:
                         mousecounter = 0;
                         selectioncell1.setPosition(Vector2f((1900), (1900)));
                         myboard.printchess();
-                        myboard.board[2][2].mohre->checkmove();
                     }
                 }
-            window.clear();
-            window.draw(spriteboard);
             for (int i = 0; i < 8; i++){
                 for (int j = 0; j < 8; j++){
                     if ( myboard.board[i][j].mohre->keyname != "--"){
@@ -329,6 +390,18 @@ public:
                         temp4sprite.setTexture(temp4);
                         temp4sprite.setPosition(Vector2f((j*100), (i*100)));
                         window.draw(temp4sprite);
+                    }
+                }
+            }
+            if (mousecounter == 1){
+                for (int i = 0; i < 8; i++){
+                    for (int j = 0; j < 8; j++){
+                        if (accessible_cells[i][j] == 1){
+                            CircleShape accessible_cell(25);
+                            accessible_cell.setFillColor(Color(0, 255, 0, 200));
+                            accessible_cell.setPosition(Vector2f((j*100 + 25), (i*100 + 25)));
+                            window.draw(accessible_cell);
+                        }
                     }
                 }
             }

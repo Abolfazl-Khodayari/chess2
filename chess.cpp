@@ -443,8 +443,10 @@ public:
                             }
                             else{
                                 if (x == 6){
-                                    if (y == j and (i == 5 or i == 4)){
+                                    if (y == j){
+                                        if (((i == 4) and (board[5][j].mohre->keytype == keys::empt) and (board[4][j].mohre->keytype == keys::empt)) or ((i == 5))){
                                         accessible[i][j] = 1;
+                                        } 
                                     }
                                 }
                                 else if(x != 6 and y == j and x-i == 1){
@@ -460,8 +462,10 @@ public:
                             }
                             else{
                                 if (x == 1){
-                                    if (y == j and (i == 3 or i == 2)){
+                                    if (y == j){
+                                        if (((i == 3) and (board[4][j].mohre->keytype == keys::empt)) or ((i == 2))){
                                         accessible[i][j] = 1;
+                                        }
                                     }
                                 }
                                 else if(x != 1 and y == j and i-x == 1){

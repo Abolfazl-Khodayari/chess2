@@ -292,6 +292,47 @@ public:
 
                     }
                     else if (board[x][y].mohre->keytype == keys::bishop){
+                        if (abs(x-i) == abs(y-j)){
+                            if (x < i){
+                                if (y < j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (x > i){
+                                if (y < j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (temp_ckeck_empty == 1){
+                                accessible[i][j] = 1;
+                            }
+                        }
 
                     }
                     else if (board[x][y].mohre->keytype == keys::pawn){

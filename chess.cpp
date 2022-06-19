@@ -220,9 +220,11 @@ public:
         board[i][j].mohre = new Empty;
     }
     vector<vector<int>> checkmove(int x, int y) {
+        int temp_ckeck_empty;
         vector<vector<int>> accessible (8, vector<int>(8,0));
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
+                temp_ckeck_empty = 1;
                 if(board[i][j].mohre->team != board[x][y].mohre->team){
                     if (board[x][y].mohre->keytype == keys::king){
                         if ((abs(x - i) < 2 and abs(y - j) < 2)){
@@ -233,7 +235,58 @@ public:
 
                     }
                     else if (board[x][y].mohre->keytype == keys::rook){
-
+                        if (x == i){
+                            if (y > j){
+                                for (int l = y-1; l > j; l--){
+                                    if (board[x][l].mohre->keytype != keys::empt){
+                                        temp_ckeck_empty = 0;
+                                        break;
+                                    }
+                                }
+                                if (temp_ckeck_empty == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            else if (y < j){
+                                for (int l = y+1; l < j; l++){
+                                    if (board[x][l].mohre->keytype != keys::empt){
+                                        temp_ckeck_empty = 0;
+                                        break;
+                                    }
+                                }
+                                if (temp_ckeck_empty == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                        }
+                        else if (y == j){
+                            if (x > i){
+                                for (int l = x-1; l > i; l--){
+                                    if (board[l][y].mohre->keytype != keys::empt){
+                                        temp_ckeck_empty = 0;
+                                        break;
+                                    }
+                                }
+                                if (temp_ckeck_empty == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            if (x < i){
+                                for (int l = x+1; l < i; l++){
+                                    if (board[l][y].mohre->keytype != keys::empt){
+                                        temp_ckeck_empty = 0;
+                                        // if (board[i][y].mohre->team != board[x][y].mohre->team){
+                                        //     temp_ckeck_empty = 1;
+                                        // }
+                                        break;
+                                    }
+                                }
+                                if (temp_ckeck_empty == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            
+                        }
                     }
                     else if (board[x][y].mohre->keytype == keys::knight){
 

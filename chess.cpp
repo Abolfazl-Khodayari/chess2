@@ -2,6 +2,7 @@
 //  g++ chess.cpp  -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system
 // ./sfml-app
 #include <string>
+#include <fstream>
 #include <stdlib.h>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -420,31 +421,36 @@ public:
 int main() {
     cout << " -- starting -- \n";
     defboard mainboard;
-    string temp1;
+    ifstream inputFile;
+    inputFile.open("input.text");
+    if (!inputFile){
+        cout << "we fucked up :(" << endl;
+    }
+    string temp_input;
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            cin >> temp1;
-            if (temp1 == "--") {
+            inputFile >> temp_input;
+            if (temp_input == "--") {
                 mainboard.board[i][j].mohre = new Empty;
             }
-            else if (temp1[0] == 'K') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'K') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new King(1);
                 }
                 else {
                     mainboard.board[i][j].mohre = new King(2);
                 }
             }
-            else if (temp1[0] == 'Q') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'Q') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new Queen(1);
                 }
                 else {
                     mainboard.board[i][j].mohre = new Queen(2);
                 }
             }
-            else if (temp1[0] == 'B') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'B') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new Bishop(1);
                 }
                 else {
@@ -452,24 +458,24 @@ int main() {
                 }
             }
 
-            else if (temp1[0] == 'N') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'N') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new Knight(1);
                 }
                 else {
                     mainboard.board[i][j].mohre = new Knight(2);
                 }
             }
-            else if (temp1[0] == 'R') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'R') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new Rook(1);
                 }
                 else {
                     mainboard.board[i][j].mohre = new Rook(2);
                 }
             }
-            else if (temp1[0] == 'P') {
-                if (temp1[1] == 'W') {
+            else if (temp_input[0] == 'P') {
+                if (temp_input[1] == 'W') {
                     mainboard.board[i][j].mohre = new Pawn(1);
                 }
                 else {

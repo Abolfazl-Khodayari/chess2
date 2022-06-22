@@ -16,5 +16,22 @@ KB KB KB KB KB KB KB KB
 KB KB KB KB KB KB KB KB
 KB KB KB KB KB KB KB KB
 
+RB NB BB QB KB BB NB RB
+PB PB PB PB PB PB PB PB
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+PW PW PW PW PW PW PW PW
+RW NW BW QW KW BW NW RW
+
+-- -- -- -- -- -- -- --
+-- -- KB -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- QW -- -- -- --
+-- -- -- -- -- -- -- --
+-- -- -- -- -- -- -- --
 
  and (board[j][j].mohre->team != board[x][y].mohre->team)

@@ -24,9 +24,6 @@ public:
         x = i;
         y = j;
     }
-    virtual vector<vector<int>> posiablemoves(const point**){
-        cout << "IN keys" << endl;
-    }
 };
 class point {
 public:
@@ -47,21 +44,7 @@ public:
         }
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*75), (y*75)));
-    }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                temp_ckeck_empty = 1;
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    if ((abs(x - i) < 2 and abs(y - j) < 2)){
-                        accessible[i][j] = 1;
-                    }
-                }
-            }
-        }
-        return accessible;
+        
     }
 };
 class Queen : public keys {
@@ -80,113 +63,9 @@ public:
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*75), (y*75)));
     }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    temp_ckeck_empty = 1;
-                    if (abs(x-i) == abs(y-j)){
-                        if (x < i){
-                            if (y < j){
-                                for (int l = 1; l < i-x; l++){
-                                    if (myboard[x+l][y+l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            else if ( y > j){
-                                for (int l = 1; l < i-x; l++){
-                                    if (myboard[x+l][y-l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        else if (x > i){
-                            if (y < j){
-                                for (int l = 1; l < x-i; l++){
-                                    if (myboard[x-l][y+l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            else if ( y > j){
-                                for (int l = 1; l < x-i; l++){
-                                    if (myboard[x-l][y-l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (temp_ckeck_empty == 1){
-                            accessible[i][j] = 1;
-                        }
-                    }
-                    if (x == i or y == j){
-                        if (x == i){
-                            if (y > j){
-                                for (int l = y-1; l > j; l--){
-                                    if (myboard[x][l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            else if (y < j){
-                                for (int l = y+1; l < j; l++){
-                                    if (myboard[x][l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                        }
-                        else if (y == j){
-                            if (x > i){
-                                for (int l = x-1; l > i; l--){
-                                    if (myboard[l][y].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            if (x < i){
-                                for (int l = x+1; l < i; l++){
-                                    if (myboard[l][y].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        // if (board[i][y].mohre->team != board[x][y].mohre->team){
-                                        //     temp_ckeck_empty = 1;
-                                        // }
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
-        return accessible;
-    }
+    // int checkmove(int i, int j) {
+
+    // }
 };
 class Bishop : public keys {
 public:
@@ -204,59 +83,9 @@ public:
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*75), (y*75)));
     }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                temp_ckeck_empty = 1;
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    if (abs(x-i) == abs(y-j)){
-                        if (x < i){
-                            if (y < j){
-                                for (int l = 1; l < i-x; l++){
-                                    if (myboard[x+l][y+l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            else if ( y > j){
-                                for (int l = 1; l < i-x; l++){
-                                    if (myboard[x+l][y-l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        else if (x > i){
-                            if (y < j){
-                                for (int l = 1; l < x-i; l++){
-                                    if (myboard[x-l][y+l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            else if ( y > j){
-                                for (int l = 1; l < x-i; l++){
-                                    if (myboard[x-l][y-l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (temp_ckeck_empty == 1){
-                            accessible[i][j] = 1;
-                        }
-                    }
-                }
-            }
-        }
-        return accessible;
-    }
+    // int checkmove(int i, int j) {
+
+    // }
 };
 class Knight : public keys {
 public:
@@ -274,20 +103,10 @@ public:
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*75), (y*75)));
     }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                temp_ckeck_empty = 1;
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    if ((abs(x-i) + abs(y-j) == 3) and (abs((abs(x-i)-abs(y-j))) == 1)){
-                        accessible[i][j] = 1;
-                    }
-                }
-            }
+    int checkmove(int i, int j) {
+        if ((abs(i * j) == 2)) {
+            return 1;
         }
-        return accessible;
     }
 };
 class Rook : public keys {
@@ -306,72 +125,10 @@ public:
         spritekey.setTexture(texturekey);
         spritekey.setPosition(Vector2f((x*100), (y*100)));
     }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                temp_ckeck_empty = 1;
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    if (x == i or y == j){
-                        if (x == i){
-                            if (y > j){
-                                for (int l = y-1; l > j; l--){
-                                    if (myboard[x][l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            else if (y < j){
-                                for (int l = y+1; l < j; l++){
-                                    if (myboard[x][l].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                        }
-                        else if (y == j){
-                            if (x > i){
-                                for (int l = x-1; l > i; l--){
-                                    if (myboard[l][y].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            if (x < i){
-                                for (int l = x+1; l < i; l++){
-                                    if (myboard[l][y].mohre->keytype != keys::empt){
-                                        temp_ckeck_empty = 0;
-                                        // if (board[i][y].mohre->team != board[x][y].mohre->team){
-                                        //     temp_ckeck_empty = 1;
-                                        // }
-                                        break;
-                                    }
-                                }
-                                if (temp_ckeck_empty == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
-        return accessible;
-    }
+    // int checkmove(int i, int j) {
+
+
+    // }
 };
 class Pawn : public keys {
 public:
@@ -387,56 +144,18 @@ public:
             texturekey.loadFromFile("texture/set800/bpawn.png", IntRect(0, 0, 100, 100));
         }
     }
-    virtual vector<vector<int>> posiablemoves(const point** myboard){
-        int temp_ckeck_empty;
-        vector<vector<int>> accessible (8, vector<int>(8,0));
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                temp_ckeck_empty = 1;
-                if(myboard[i][j].mohre->team != myboard[x][y].mohre->team){
-                    if (myboard[x][y].mohre->team == 1){
-                        if (myboard[i][j].mohre->team == 2 and (x - i == 1)){
-                            if (abs(y - j) == 1){
-                                accessible[i][j] = 1;
-                            }
-                        }
-                        else{
-                            if (x == 6){
-                                if (y == j){
-                                    if (((i == 4) and (myboard[5][j].mohre->keytype == keys::empt) and (myboard[4][j].mohre->keytype == keys::empt)) or ((i == 5))){
-                                    accessible[i][j] = 1;
-                                    } 
-                                }
-                            }
-                            else if(x != 6 and y == j and x-i == 1){
-                                    accessible[i][j] = 1;
-                                }
-                            }
-                        }
-                    else if (myboard[x][y].mohre->team == 2){
-                        if (myboard[i][j].mohre->team == 1 and (i - x == 1)){
-                            if (abs(y - j) == 1){
-                                accessible[i][j] = 1;
-                            }
-                        }
-                        else{
-                            if (x == 1){
-                                if (y == j){
-                                    if (((i == 3) and (myboard[2][j].mohre->keytype == keys::empt)) or ((i == 2))){
-                                    accessible[i][j] = 1;
-                                    }
-                                }
-                            }
-                            else if(x != 1 and y == j and i-x == 1){
-                                    accessible[i][j] = 1;
-                            }
-                        }
-                    }
-                }
+    /*int checkmove(int i, int j) {
+        if (board.cellckeck(i, j) == team) {
+            return 0;
+        }
+        if (abs(x - i) == 1 && (y - j) == 1) {
+            if (board.cellckeck(i, j) == 0) {
+                return 0;
             }
         }
-        return accessible;
-    }
+        if (abs(x - i) == 0 && (y - j) == 1)
+            return 0;
+    }*/
 };
 class Empty : public keys {
 public:
@@ -454,6 +173,9 @@ public:
     selectedCells(int x1, int y1){
         x = x1 * 100 + 10; 
         y = y1 * 100 + 10;
+
+
+
     }
 };
 class defboard {
@@ -573,11 +295,265 @@ public:
     vector<vector<int>> posiablemove(int x, int y) {
         int temp_ckeck_empty;
         vector<vector<int>> accessible (8, vector<int>(8,0));
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                temp_ckeck_empty = 1;
+                if(board[i][j].mohre->team != board[x][y].mohre->team){
+                    if (board[x][y].mohre->keytype == keys::king){
+                        if ((abs(x - i) < 2 and abs(y - j) < 2)){
+                            accessible[i][j] = 1;
+                        }
+                    }
+                    else if (board[x][y].mohre->keytype == keys::queen){
+                        if (abs(x-i) == abs(y-j)){
+                            if (x < i){
+                                if (y < j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (x > i){
+                                if (y < j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (temp_ckeck_empty == 1){
+                                accessible[i][j] = 1;
+                            }
+                        }
+                        if (x == i or y == j){
+                            if (x == i){
+                                if (y > j){
+                                    for (int l = y-1; l > j; l--){
+                                        if (board[x][l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                else if (y < j){
+                                    for (int l = y+1; l < j; l++){
+                                        if (board[x][l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                            }
+                            else if (y == j){
+                                if (x > i){
+                                    for (int l = x-1; l > i; l--){
+                                        if (board[l][y].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                if (x < i){
+                                    for (int l = x+1; l < i; l++){
+                                        if (board[l][y].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            // if (board[i][y].mohre->team != board[x][y].mohre->team){
+                                            //     temp_ckeck_empty = 1;
+                                            // }
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    else if (board[x][y].mohre->keytype == keys::rook){
+                        if (x == i or y == j){
+                            if (x == i){
+                                if (y > j){
+                                    for (int l = y-1; l > j; l--){
+                                        if (board[x][l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                else if (y < j){
+                                    for (int l = y+1; l < j; l++){
+                                        if (board[x][l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                            }
+                            else if (y == j){
+                                if (x > i){
+                                    for (int l = x-1; l > i; l--){
+                                        if (board[l][y].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                if (x < i){
+                                    for (int l = x+1; l < i; l++){
+                                        if (board[l][y].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            // if (board[i][y].mohre->team != board[x][y].mohre->team){
+                                            //     temp_ckeck_empty = 1;
+                                            // }
+                                            break;
+                                        }
+                                    }
+                                    if (temp_ckeck_empty == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                    else if (board[x][y].mohre->keytype == keys::knight){
+                        if ((abs(x-i) + abs(y-j) == 3) and (abs((abs(x-i)-abs(y-j))) == 1)){
+                            accessible[i][j] = 1;
+                        }
+                    }
+                    else if (board[x][y].mohre->keytype == keys::bishop){
+                        if (abs(x-i) == abs(y-j)){
+                            if (x < i){
+                                if (y < j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < i-x; l++){
+                                        if (board[x+l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (x > i){
+                                if (y < j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y+l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if ( y > j){
+                                    for (int l = 1; l < x-i; l++){
+                                        if (board[x-l][y-l].mohre->keytype != keys::empt){
+                                            temp_ckeck_empty = 0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (temp_ckeck_empty == 1){
+                                accessible[i][j] = 1;
+                            }
+                        }
+
+                    }
+                    else if (board[x][y].mohre->keytype == keys::pawn){
+                        if (board[x][y].mohre->team == 1){
+                            if (board[i][j].mohre->team == 2 and (x - i == 1)){
+                                if (abs(y - j) == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            else{
+                                if (x == 6){
+                                    if (y == j){
+                                        if (((i == 4) and (board[5][j].mohre->keytype == keys::empt) and (board[4][j].mohre->keytype == keys::empt)) or ((i == 5))){
+                                        accessible[i][j] = 1;
+                                        } 
+                                    }
+                                }
+                                else if(x != 6 and y == j and x-i == 1){
+                                        accessible[i][j] = 1;
+                                    }
+                                }
+                            }
+                        else if (board[x][y].mohre->team == 2){
+                            if (board[i][j].mohre->team == 1 and (i - x == 1)){
+                                if (abs(y - j) == 1){
+                                    accessible[i][j] = 1;
+                                }
+                            }
+                            else{
+                                if (x == 1){
+                                    if (y == j){
+                                        if (((i == 3) and (board[2][j].mohre->keytype == keys::empt)) or ((i == 2))){
+                                        accessible[i][j] = 1;
+                                        }
+                                    }
+                                }
+                                else if(x != 1 and y == j and i-x == 1){
+                                        accessible[i][j] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return accessible;
     }
     vector<vector<int>> checkmove(int x, int y){
         vector<vector<int>> accessibles (8, vector<int>(8,0));
-        accessibles = board[x][y].mohre->posiablemoves(board);
+        accessibles = posiablemove(x, y);
         for (int k = 0; k < 8; k++){
             for (int l = 0; l < 8; l++){
                 if (accessibles[k][l] == 1){
@@ -752,7 +728,6 @@ public:
             // myboard.printchess();
         }
     }
-
 };
 int main() {
     cout << " -- starting -- \n";
@@ -828,17 +803,6 @@ int main() {
     // cout << '\n';
     GraphicCore maingraphics;
     maingraphics.runGraphic(mainboard);
-    // int temp2[4];
-    //cout << "Enter the key origin and destination. for example: i j x y" << endl;
-    // while (1) {
-    //     for (int i = 0; i < 4; i++) {
-    //         cin >> temp2[i];
-    //     }
-    //     cout << "Enter the key origin and destination. for example: i j x y" << endl;
-    //     mainboard.move(temp2[0]-1, temp2[1]-1, temp2[2]-1, temp2[3]-1);
-    //     mainboard.printchess();
-    //     maingraphics.runGraphic(mainboard.board);
-    // }
     cout << "end of program" << endl;
     return 0;
 }
